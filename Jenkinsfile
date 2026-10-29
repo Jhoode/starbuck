@@ -8,7 +8,7 @@ pipeline {
         SCANNER_HOME = tool 'sonar-scanner'
         // >>> CHANGE THESE TWO <<<
         GIT_REPO   = 'https://github.com/Jhoode/starbuck.git'
-        IMAGE      = '<your-dockerhub-user>/starbucks:latest'
+        IMAGE      = 'jhoode/starbucks:latest'
     }
     stages {
         stage('Clean workspace') { steps { cleanWs() } }

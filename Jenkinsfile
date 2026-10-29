@@ -7,7 +7,7 @@ pipeline {
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
         // >>> CHANGE THESE TWO <<<
-        GIT_REPO   = 'https://github.com/<your-github-user>/starbucks.git'
+        GIT_REPO   = 'https://github.com/Jhoode/starbuck.git'
         IMAGE      = '<your-dockerhub-user>/starbucks:latest'
     }
     stages {

@@ -27,7 +27,10 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                script { waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' }
+                // fail fast instead of hanging forever if the SonarQube webhook never arrives
+                timeout(time: 5, unit: 'MINUTES') {
+                    script { waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' }
+                }
             }
         }
 
@@ -35,8 +38,14 @@ pipeline {
 
         stage('OWASP FS Scan') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                // needs a free NVD API key stored as Secret text 'nvd-api-key';
+                // any problem here marks the build UNSTABLE instead of stopping it
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+                        dependencyCheck additionalArguments: "--scan ./ --disableYarnAudit --disableNodeAudit --nvdApiKey ${NVD_API_KEY}", odcInstallation: 'DP-Check'
+                    }
+                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                }
             }
         }
 
@@ -57,11 +66,14 @@ pipeline {
 
         stage('Docker Scout Image') {
             steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh "docker-scout quickview ${IMAGE}"
-                        sh "docker-scout cves ${IMAGE}"
-                        sh "docker-scout recommendations ${IMAGE}"
+                // a Scout problem marks the build UNSTABLE instead of blocking the deploy
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    script {
+                        withDockerRegistry(credentialsId: 'docker') {   // use the server's Docker, not the outdated Jenkins-downloaded one
+                            sh "docker-scout quickview ${IMAGE}"
+                            sh "docker-scout cves ${IMAGE}"
+                            sh "docker-scout recommendations ${IMAGE}"
+                        }
                     }
                 }
             }

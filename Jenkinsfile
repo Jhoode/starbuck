@@ -9,6 +9,11 @@ pipeline {
         // >>> CHANGE THESE TWO <<<
         GIT_REPO   = 'https://github.com/Jhoode/starbuck.git'
         IMAGE      = 'jhoode/starbucks:latest'
+
+            triggers {
+        // start a build whenever GitHub sends a push webhook to /github-webhook/
+        githubPush()
+    }
     }
     stages {
         stage('Clean workspace') { steps { cleanWs() } }

@@ -4,16 +4,14 @@ pipeline {
         jdk 'jdk17'
         nodejs 'node16'
     }
-    environment {
-        SCANNER_HOME = tool 'sonar-scanner'
-        // >>> CHANGE THESE TWO <<<
-        GIT_REPO   = 'https://github.com/Jhoode/starbuck.git'
-        IMAGE      = 'jhoode/starbucks:latest'
-
-            triggers {
+    triggers {
         // start a build whenever GitHub sends a push webhook to /github-webhook/
         githubPush()
     }
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+        GIT_REPO   = 'https://github.com/Jhoode/starbuck.git'
+        IMAGE      = 'jhoode/starbucks:latest'
     }
     stages {
         stage('Clean workspace') { steps { cleanWs() } }

@@ -19,7 +19,7 @@ const Home = () => {
           <span className="text-white md:text-2xl sm:text-base sm:font-s_bold md:font-Light text-center">Rewards are pouring in this month of November! Sign up NOW and enjoy the benefits.</span>
         </div>
         <div>
-          <button className="text-white text-sm border-white border-2 p-1 px-3 rounded-3xl mt-2 md:mt-0 cursor-pointer">Click to Know More</button>
+          <button className="text-white text-sm border-white border-2 p-1 px-3 rounded-3xl mt-2 md:mt-0 cursor-pointer">Click to Know More.</button>
         </div>
       </div>
 

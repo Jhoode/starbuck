@@ -120,7 +120,7 @@ const Home = () => {
         <div className='md:px-0   px-4 sm:px-3  md:pl-20  md:pr-28  '>
           <div className='flex items-center w-full justify-between '>
             <h1 className='text-[#1e3932] text-2xl font-bold '>Barista Recommends</h1>
-            <button className='text-green-800 font-s_bold hidden sm:block  m-0'>View Menu</button>
+            <button className='text-green-800 font-s_bold hidden sm:block  m-0'>Take a peek at our menu</button>
           </div>
           <div className="absolute -top-2 right-1">
             <svg

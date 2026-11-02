@@ -27,7 +27,7 @@ const Home = () => {
       <div className="bg-white py-7 w-100">
         <div className="md:pl-24  md:pr-28">
           <div className="flex justify-start mb-4 mt-2 px-4  ">
-            <h1 className="text-[#1e3932] font-bold text-2xl">HANDCRAFTED CURATIONS</h1>
+            <h1 className="text-[#1e3932] font-bold text-2xl">HAND-CRAFTED CURATIONS</h1>
           </div>
           <div className='flex justify-between items-center text-center gap-5 px-3 sm:px-0 sm:gap-0 sm:w-full  flex-wrap'>
             {
